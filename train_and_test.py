@@ -92,7 +92,8 @@ def experiment(cmdline_args):
      #print obj[:,cD["NumberOfTime30-59DaysPastDueNotWorse"]]
 
      hasDefaulted=ind(obj[:,cD["NumberOfTime30-59DaysPastDueNotWorse"]]+obj[:,cD["NumberOfTime60-89DaysPastDueNotWorse"]]+obj[:,cD["NumberOfTimes90DaysLate"]],0)
-     
+     #hasDefaultedLots=np.array([obj[:,cD["NumberOfTime30-59DaysPastDueNotWorse"]]+2*obj[:,cD["NumberOfTime60-89DaysPastDueNotWorse"]]+obj[:,cD["NumberOfTimes90DaysLate"]]]).transpose()
+      
      #oldRichGuy=obj[:,2]*obj[:,3]*obj[:,3]
      
      #age > 35 & dependents > 2 & monthlyIncome
@@ -111,6 +112,7 @@ def experiment(cmdline_args):
      out=np.append(out,nO2,axis=1)
      out=np.append(out,c,axis=1)
      out=np.append(out,hasDefaulted,axis=1)
+     #out=np.append(out,hasDefaultedLots,axis=1)
      
      return out 
 
