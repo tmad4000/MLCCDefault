@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-Machine Learning Practical 2: train_and_test.py
+Machine Learning Practical 2: 
+_and_test.py
 
 usage: python train_and_test.py [option]
 Options and arguments:
@@ -73,10 +74,53 @@ def experiment(cmdline_args):
   # TODO: you should transform x, xdev, and xtest 
   #       here...
   #################################################
+
+  colRay=["RevolvingUtilizationOfUnsecuredLines","age","NumberOfTime30-59DaysPastDueNotWorse","DebtRatio","MonthlyIncome","NumberOfOpenCreditLinesAndLoans","NumberOfTimes90DaysLate","NumberRealEstateLoansOrLines","NumberOfTime60-89DaysPastDueNotWorse","NumberOfDependents"]
+
+  cD = {}
+  for i in range(len(colRay)):
+    cD[colRay[i]]= i
   
-  x=np.tanh(x)
-  xdev=np.tanh(xdev)
-  xtest=np.tanh(xtest)
+  def ind(col,thresh):
+    return np.array([np.where(col[:] > thresh, 1, 0)]).transpose()
+
+  def myTransf(obj):
+    
+     out = np.copy(obj)
+     
+     nO=np.copy(obj)
+     #print obj[:,cD["NumberOfTime30-59DaysPastDueNotWorse"]]
+
+     hasDefaulted=ind(obj[:,cD["NumberOfTime30-59DaysPastDueNotWorse"]]+obj[:,cD["NumberOfTime60-89DaysPastDueNotWorse"]]+obj[:,cD["NumberOfTimes90DaysLate"]],0)
+     
+     #oldRichGuy=obj[:,2]*obj[:,3]*obj[:,3]
+     
+     #age > 35 & dependents > 2 & monthlyIncome
+     
+     
+     
+     nO=np.tanh(nO)
+
+     nO2=sigmoid(np.copy(obj))
+
+     c=np.zeros((obj.shape[0],1));
+     c=c+11
+
+     
+     out=np.append(out,nO,axis=1)
+     out=np.append(out,nO2,axis=1)
+     out=np.append(out,c,axis=1)
+     out=np.append(out,hasDefaulted,axis=1)
+     
+     return out 
+
+  x=myTransf(x)
+  xdev=myTransf(xdev)
+  xtest=myTransf(xtest)
+  
+#  x=np.tanh(x)
+#  xdev=np.tanh(xdev)
+#  xtest=np.tanh(xtest)
   
   #################################################
 
